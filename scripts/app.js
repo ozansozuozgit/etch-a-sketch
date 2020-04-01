@@ -24,67 +24,38 @@ function randomColor() {
   )}%,${Math.floor(Math.random() * 100)}%`;
 }
 
-function RGBToHSL(rgb) {
-  let sep = rgb.indexOf(",") > -1 ? "," : " ";
+function darkerShade(rgb) {
+  const sep = rgb.indexOf(",") > -1 ? "," : " ";
   rgb = rgb.substr(4).split(")")[0].split(sep);
   console.log(rgb);
 
-  for (let R in rgb) {
-    let r = rgb[R];
-    if (r.indexOf("%") > -1)
-      rgb[R] = Math.round((r.substr(0, r.length - 1) / 100) * 255);
+  let r = rgb[0];
+  let g = rgb[1];
+  let b = rgb[2];
+
+  if (r >= 0) {
+    r -= r * 0.2;
+  }
+  if (g >= 0) {
+    g -= g * 0.2;
+  }
+  if (b >= 0) {
+    b -= b * 0.2;
   }
 
-  // Make r, g, and b fractions of 1
-  let r = rgb[0] / 255,
-    g = rgb[1] / 255,
-    b = rgb[2] / 255;
-
-  // Find greatest and smallest channel values
-  let cmin = Math.min(r, g, b),
-    cmax = Math.max(r, g, b),
-    delta = cmax - cmin,
-    h = 0,
-    s = 0,
-    l = 0;
-  // Calculate hue
-  // No difference
-  if (delta == 0) h = 0;
-  // Red is max
-  else if (cmax == r) h = ((g - b) / delta) % 6;
-  // Green is max
-  else if (cmax == g) h = (b - r) / delta + 2;
-  // Blue is max
-  else h = (r - g) / delta + 4;
-
-  h = Math.round(h * 60);
-
-  // Make negative hues positive behind 360°
-  if (h < 0) h += 360;
-  // Calculate lightness
-  l = (cmax + cmin) / 2;
-
-  // Calculate saturation
-  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-
-  // Multiply l and s by 100
-  s = +(s * 100).toFixed(1);
-  l = +(l * 100).toFixed(1);
-
-  l -= 10;
-
-  return "hsl(" + h + "," + s + "%," + l + "%)";
+  return `rgb(${r},${g},${b})`;
 }
 
 const blocks = document.querySelectorAll(".blocks");
 blocks.forEach(block => {
   block.addEventListener("mouseover", e => {
-    // console.log(e.target.classList.contains(".colored"));
     if (!e.target.classList.contains(".colored")) {
       e.target.style.backgroundColor = randomColor();
     } else {
-      e.target.style.backgroundColor = RGBToHSL(e.target.style.backgroundColor);
-      console.log(RGBToHSL(e.target.style.backgroundColor));
+      e.target.style.backgroundColor = darkerShade(
+        e.target.style.backgroundColor
+      );
+      console.log(darkerShade(e.target.style.backgroundColor));
     }
     e.target.classList.add(".colored");
   });
