@@ -31,13 +31,13 @@ function darkerShade(rgb) {
   let b = rgb[2];
 
   // subtract values by 20% to get a darker shade
-  if (r >= 0) {
+  if (r > 0) {
     r -= r * 0.2;
   }
-  if (g >= 0) {
+  if (g > 0) {
     g -= g * 0.2;
   }
-  if (b >= 0) {
+  if (b > 0) {
     b -= b * 0.2;
   }
 
