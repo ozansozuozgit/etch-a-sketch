@@ -1,11 +1,23 @@
+body {
+  background: black url("../images/abs.png") no-repeat fixed center;
+  background-size: 1000px;
+}
 #container {
   height: 500px;
   width: 500px;
-  margin: auto;
+  margin: 40px auto 0 auto;
   border: 1px solid black;
   display: grid;
 }
 
 .blocks {
   border: 1px solid black;
+}
+
+#btn-reset {
+  display: block;
+  margin: 10px auto 40px auto;
+  font-size: 20px;
+  color: white;
+  background-color: black;
 }
